@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const logger = require('./logger/logger');
-// const authRouter = require('./routes/auth-router');
+const msgRouter = require('./routes/message-router');
 const connectMongo = require('./db-connect');
 const bodyParser = require('body-parser');
 
@@ -16,16 +16,13 @@ app.use('/', (req, res, next) => {
 });
 
 app.use('/', (req, res, next) => {
-    console.log('hi');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
     next();
 });
 
-// app.use('/auth', authRouter);
-
-
+app.use('/message', msgRouter);
 
 app.use((err, req, res, next) => {
     if (err) {
